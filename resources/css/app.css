@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +6,130 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+.button-primary {
+    @apply inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-500 transition text-nowrap;
+}
+
+/* Styled select dropdown with caret icon */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}
+
+/* Mobile Menu Toggle Button */
+.mobile-menu-toggle {
+    @apply flex flex-col justify-center items-center w-8 h-8 bg-transparent cursor-pointer p-0 border-0 lg:hidden;
+
+    .bar {
+        @apply block w-6 h-0.5 bg-gray-700 rounded transition-all duration-300;
+    }
+
+    &.active .bar:nth-child(1) {
+        @apply rotate-45 translate-y-2;
+    }
+
+    &.active .bar:nth-child(2) {
+        @apply opacity-0;
+    }
+
+    &.active .bar:nth-child(3) {
+        @apply -rotate-45 -translate-y-2;
+    }
+}
+
+.navbar-nav {
+    @apply flex gap-4;
+
+    .nav-item {
+        @apply relative;
+
+        .nav-link {
+            @apply text-black font-medium hover:text-blue-800 transition inline-block rounded text-nowrap;
+
+            &.dropdown-toggle {
+                @apply after:content-[''] after:inline-block after:w-0 after:h-0 after:border-l-4 after:border-r-4 after:border-t-4 after:border-l-transparent after:border-r-transparent after:border-t-black after:ml-2 after:align-middle flex items-center whitespace-nowrap;
+            }
+        }
+
+        &.show {
+            .dropdown-menu {
+                @apply block;
+            }
+
+            .nav-link.dropdown-toggle::after {
+                @apply border-t-transparent border-b-4 border-b-black;
+            }
+        }
+
+        .dropdown-menu {
+            @apply absolute left-0 top-full min-w-[200px] bg-white shadow-lg rounded-lg py-2 z-50 hidden;
+
+            .dropdown-item {
+                @apply block w-full text-left px-4 py-2 text-black hover:bg-blue-50 hover:text-blue-800 transition;
+            }
+
+            .dropdown-divider {
+                @apply border-t border-gray-200 my-2;
+            }
+        }
+    }
+}
+
+/* Responsive Styles - Mobile (below 1024px) */
+@media (max-width: 1023px) {
+    .navbar-nav {
+        @apply fixed top-full left-0 right-0 bg-white shadow-lg flex-col gap-0 max-h-[calc(100vh-80px)] overflow-y-auto hidden;
+
+        &.mobile-open {
+            @apply flex;
+        }
+
+        .nav-item {
+            @apply w-full border-t border-gray-100;
+
+            .nav-link {
+                @apply block w-full py-3 px-4;
+            }
+
+            .dropdown-menu {
+                @apply static shadow-none rounded-none pl-8;
+            }
+
+            &.show .dropdown-menu {
+                @apply block;
+            }
+        }
+    }
+}
+
+/* Desktop Styles (1024px and above) */
+@media (min-width: 1024px) {
+    .mobile-menu-toggle {
+        @apply hidden;
+        display: none !important;
+    }
+
+    .navbar-nav {
+        @apply flex-row;
+
+        .nav-item {
+            &:hover {
+                .dropdown-menu {
+                    @apply block;
+                }
+            }
+        }
+    }
 }
