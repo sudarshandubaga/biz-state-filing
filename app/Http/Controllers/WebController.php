@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
+use App\Models\ComplianceDeadline;
 use App\Models\Country;
 use App\Models\EntityType;
 use App\Models\Industry;
+use App\Models\TaxForm;
+use App\Models\Resource;
 use App\Mail\ContactEnquiry;
 use App\Models\Page;
 use App\Models\State;
@@ -77,6 +80,51 @@ class WebController extends Controller
     /**
      * Show the contact form page.
      */
+    public function taxForms($stateSlug = null, $entityType = null)
+    {
+        $query = TaxForm::with('state')->where('status', true);
+
+        if ($stateSlug) {
+            $state = State::where('state_slug', $stateSlug)->first();
+            if ($state) $query->where(function ($q) use ($state) {
+                $q->where('state_id', $state->id)->orWhereNull('state_id');
+            });
+        }
+
+        if ($entityType && $entityType !== 'all') {
+            $query->where(function ($q) use ($entityType) {
+                $q->where('entity_type', $entityType)->orWhereNull('entity_type')->orWhere('entity_type', 'all');
+            });
+        }
+
+        $forms = $query->orderBy('category')->orderBy('form_name')->get();
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $categories = TaxForm::where('status', true)->select('category')->distinct()->pluck('category');
+
+        return view('web.screens.tax-forms', compact('forms', 'states', 'stateSlug', 'entityType', 'categories'));
+    }
+
+    public function complianceCalendar(Request $request)
+    {
+        $query = ComplianceDeadline::with('state')->where('status', true);
+
+        if ($request->filled('state_id')) $query->where('state_id', $request->state_id);
+        if ($request->filled('entity_type')) $query->where(function ($q) use ($request) {
+            $q->where('entity_type', $request->entity_type)->orWhereNull('entity_type')->orWhere('entity_type', 'all');
+        });
+        if ($request->filled('category')) $query->where('category', $request->category);
+
+        $deadlines = $query->orderBy('state_id')->orderBy('sort_order')->orderBy('deadline_name')->get();
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $categories = ComplianceDeadline::where('status', true)->select('category')->distinct()->pluck('category');
+
+        $grouped = $deadlines->groupBy(function ($d) {
+            return $d->state ? $d->state->state_name : 'General';
+        });
+
+        return view('web.screens.compliance-calendar', compact('deadlines', 'grouped', 'states', 'categories'));
+    }
+
     public function contact()
     {
         return view('web.screens.contact');
@@ -181,7 +229,33 @@ class WebController extends Controller
     }
 
     /**
-     * Single blog post detail
+     * Resources listing page
+     */
+    public function resources(Request $request)
+    {
+        $query = Resource::where('status', true)->with('state');
+        if ($request->filled('category')) $query->where('category', $request->category);
+        if ($request->filled('state_id')) $query->where('state_id', $request->state_id);
+        $resources = $query->orderBy('sort_order')->orderBy('created_at', 'desc')->paginate(12)->withQueryString();
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $categories = Resource::where('status', true)->whereNotNull('category')->distinct()->pluck('category');
+        return view('web.screens.resources', compact('resources', 'states', 'categories'));
+    }
+
+    /**
+     * Resource detail page
+     */
+    public function resourceDetail($slug)
+    {
+        $resource = Resource::where('slug', $slug)->where('status', true)->with('state')->firstOrFail();
+        $related = Resource::where('status', true)->where('id', '!=', $resource->id)
+            ->when($resource->category, fn($q) => $q->where('category', $resource->category))
+            ->limit(3)->get();
+        return view('web.screens.resource-detail', compact('resource', 'related'));
+    }
+
+    /**
+     * Blog detail - place before the catch-all {slug} route
      */
     public function blogDetail($slug)
     {

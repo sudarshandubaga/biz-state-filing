@@ -104,6 +104,49 @@
                         Pages
                     </a>
 
+                    {{-- Resources --}}
+                    <a href="{{ route('admin.resources.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.resources.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        Resources
+                    </a>
+
+                    {{-- Ads Management --}}
+                    <a href="{{ route('admin.ads.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.ads.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512a9.025 9.025 0 015.488 5.488z" />
+                        </svg>
+                        Ads
+                    </a>
+
+                    {{-- Tax Forms --}}
+                    <a href="{{ route('admin.tax-forms.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.tax-forms.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Tax Forms
+                    </a>
+
+                    {{-- Compliance Calendar --}}
+                    <a href="{{ route('admin.compliance-deadlines.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.compliance-deadlines.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Compliance Calendar
+                    </a>
+
                     {{-- Blog Group --}}
                     @php $blogActive = request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') || request()->routeIs('admin.blog-tags.*'); @endphp
                     <div x-data="{ open: {{ $blogActive ? 'true' : 'false' }} }">
@@ -153,6 +196,28 @@
                             </a>
                         </div>
                     </div>
+
+                    {{-- Leads --}}
+                    <a href="{{ route('admin.leads.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.leads.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                        </svg>
+                        Leads
+                    </a>
+
+                    {{-- Affiliates --}}
+                    <a href="{{ route('admin.affiliates.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('admin.affiliates.*') ? 'bg-gray-700' : '' }} hover:bg-gray-700 transition">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Affiliates
+                    </a>
 
                     {{-- Admin Users --}}
                     <a href="{{ route('admin.admin-users.index') }}"

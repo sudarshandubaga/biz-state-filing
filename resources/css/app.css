@@ -75,6 +75,8 @@ select {
 
         .dropdown-menu {
             @apply absolute left-0 top-full min-w-[200px] bg-white shadow-lg rounded-lg py-2 z-50 hidden;
+            max-height: 70vh;
+            overflow-y: auto;
 
             .dropdown-item {
                 @apply block w-full text-left px-4 py-2 text-black hover:bg-blue-50 hover:text-blue-800 transition;

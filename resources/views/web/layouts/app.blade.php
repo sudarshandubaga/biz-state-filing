@@ -17,7 +17,23 @@
 </head>
 
 <body>
-    <header class="bg-blue-900 py-3"></header>
+    <header class="bg-blue-900 py-2">
+        <div class="container mx-auto px-4 flex justify-end items-center space-x-4">
+            @auth('web')
+                <span class="text-blue-200 text-sm">{{ auth()->user()->full_name }}</span>
+                <form method="POST" action="{{ route('auth.logout') }}" class="inline">
+                    @csrf
+                    <button type="submit"
+                        class="text-white hover:text-blue-200 text-sm font-medium transition-colors">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('auth.login') }}"
+                    class="text-white hover:text-blue-200 text-sm font-medium transition-colors">Log In</a>
+                <a href="{{ route('auth.register') }}"
+                    class="text-white hover:text-blue-200 text-sm font-medium transition-colors">Register</a>
+            @endauth
+        </div>
+    </header>
     <nav class="bg-white sticky top-0 z-50 shadow">
         <div class="container mx-auto py-3">
             <div class="flex justify-between items-center">
@@ -154,13 +170,14 @@
 
                     <!-- Mobile Start My LLC Button -->
                     <li class="nav-item lg:hidden pt-2 pb-4">
-                        <a href="{{ route('home') }}" class="button-primary w-full text-center block">Start My
+                        <a href="{{ route('formation.start') }}"
+                            class="button-primary w-full text-center block">Start My
                             LLC</a>
                     </li>
 
                 </ul>
                 <div class="ms-8 hidden lg:block">
-                    <a href="{{ route('home') }}" class="button-primary">Start My LLC</a>
+                    <a href="{{ route('formation.start') }}" class="button-primary">Start My LLC</a>
                 </div>
             </div>
         </div>
@@ -241,6 +258,7 @@
     @if (getSetting('footer_scripts'))
         {!! getSetting('footer_scripts') !!}
     @endif
+    @include('web.partials.upgrade-modal')
     @vite('resources/js/app.js')
     @stack('scripts')
 </body>

@@ -10,7 +10,14 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\EntityTypeController;
 use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\AffiliateController;
+use App\Http\Controllers\Admin\ComplianceDeadlineController;
+use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\TaxFormController;
+use App\Http\Controllers\Admin\AdController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BusinessFormationController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +59,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Admin Users
         Route::resource('admin-users', AdminUserController::class);
 
+        // Leads
+        Route::post('lead/bulk-action', [LeadController::class, 'bulkAction'])->name('leads.bulk-action');
+        Route::resource('leads', LeadController::class)->only(['index', 'show', 'destroy']);
+
+        // Affiliates
+        Route::post('affiliate/bulk-action', [AffiliateController::class, 'bulkAction'])->name('affiliates.bulk-action');
+        Route::resource('affiliates', AffiliateController::class);
+
+        // Tax Forms
+        Route::resource('tax-forms', TaxFormController::class);
+
+        // Compliance Deadlines
+        Route::resource('compliance-deadlines', ComplianceDeadlineController::class);
+
+        // Resources
+        Route::resource('resources', \App\Http\Controllers\Admin\ResourceController::class);
+
+        // Ads
+        Route::resource('ads', AdController::class);
+
         // Pages
         Route::resource('pages', PageController::class)->only(['index', 'edit', 'update']);
 
@@ -72,6 +99,40 @@ Route::get('login', function () {
     return redirect()->route('admin.login');
 })->name('login');
 
+# Business Formation Multi-Step Workflow
+Route::prefix('start-llc')->name('formation.')->group(function () {
+    Route::get('/', [BusinessFormationController::class, 'index'])->name('start');
+    Route::get('/step1', [BusinessFormationController::class, 'step1EntityType'])->name('step1');
+    Route::post('/step1', [BusinessFormationController::class, 'postStep1EntityType'])->name('step1.post');
+    Route::get('/step2', [BusinessFormationController::class, 'step2State'])->name('step2');
+    Route::post('/step2', [BusinessFormationController::class, 'postStep2State'])->name('step2.post');
+    Route::get('/step3', [BusinessFormationController::class, 'step3Universal'])->name('step3');
+    Route::post('/step3', [BusinessFormationController::class, 'postStep3Universal'])->name('step3.post');
+    Route::get('/step4', [BusinessFormationController::class, 'step4Specific'])->name('step4');
+    Route::post('/step4', [BusinessFormationController::class, 'postStep4Specific'])->name('step4.post');
+    Route::get('/step5', [BusinessFormationController::class, 'step5Review'])->name('step5');
+    Route::post('/step5', [BusinessFormationController::class, 'postStep5Review'])->name('step5.post');
+    Route::get('/step6', [BusinessFormationController::class, 'step6Matching'])->name('step6');
+    Route::post('/step6', [BusinessFormationController::class, 'postStep6Matching'])->name('step6.post');
+    Route::get('/step7', [BusinessFormationController::class, 'step7Routing'])->name('step7');
+    Route::post('/step7', [BusinessFormationController::class, 'postStep7Routing'])->name('step7.post');
+    Route::get('/step8', [BusinessFormationController::class, 'step8Sent'])->name('step8');
+    Route::get('/start-over', [BusinessFormationController::class, 'startOver'])->name('start-over');
+    Route::get('/go-to-step/{step}', [BusinessFormationController::class, 'goToStep'])->name('go-to-step');
+});
+
+# User Authentication Routes
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::get('register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('register', [AuthController::class, 'register']);
+    Route::get('verify', [AuthController::class, 'showVerify'])->name('verify');
+    Route::post('verify', [AuthController::class, 'verify'])->name('verify.post');
+    Route::post('verify/resend', [AuthController::class, 'resendCode'])->name('verify.resend');
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 # Website Routes
 Route::get('/', [WebController::class, 'home'])->name('home');
 
@@ -84,9 +145,13 @@ Route::get('/entity-types/{slug}', [WebController::class, 'entityTypeDetail'])->
 Route::get('/industries', [WebController::class, 'industries'])->name('web.industries');
 Route::get('/industries/{slug}', [WebController::class, 'industryDetail'])->name('web.industry-detail');
 
-Route::get('/compliance-calendar', function () {
-    return view('web.screens.compliance-calendar');
-})->name('web.compliance-calendar');
+// Tax Forms
+Route::get('/tax-forms', [WebController::class, 'taxForms'])->name('web.tax-forms');
+Route::get('/tax-forms/{state}/{entityType?}', [WebController::class, 'taxForms'])->name('web.tax-forms.filter');
+
+// Resources (uses dynamic pages + blog articles already)
+// Compliance Calendar
+Route::get('/compliance-calendar', [WebController::class, 'complianceCalendar'])->name('web.compliance-calendar');
 
 Route::get('/blog', [WebController::class, 'blog'])->name('web.blog');
 Route::get('/blog/{slug}', [WebController::class, 'blogDetail'])->name('web.blog-detail');
@@ -101,3 +166,7 @@ Route::post('/contact', [WebController::class, 'sendContact'])->name('web.contac
 
 // Dynamic Pages (must be at the end to avoid conflicting with other routes)
 Route::get('/{slug}', [WebController::class, 'pageDetail'])->name('web.page');
+
+// Resources
+Route::get('/resources', [WebController::class, 'resources'])->name('web.resources');
+Route::get('/resources/{slug}', [WebController::class, 'resourceDetail'])->name('web.resource-detail');
