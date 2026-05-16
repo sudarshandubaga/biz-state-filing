@@ -145,13 +145,17 @@ Route::get('/entity-types/{slug}', [WebController::class, 'entityTypeDetail'])->
 Route::get('/industries', [WebController::class, 'industries'])->name('web.industries');
 Route::get('/industries/{slug}', [WebController::class, 'industryDetail'])->name('web.industry-detail');
 
-// Tax Forms
-Route::get('/tax-forms', [WebController::class, 'taxForms'])->name('web.tax-forms');
-Route::get('/tax-forms/{state}/{entityType?}', [WebController::class, 'taxForms'])->name('web.tax-forms.filter');
+// Forms Library
+Route::get('/forms-library', [WebController::class, 'taxForms'])->name('web.forms-library');
+Route::get('/tax-forms', [WebController::class, 'onlyTaxForms'])->name('web.tax-forms');
+Route::get('/forms-library/{state}/{entityType?}', [WebController::class, 'taxForms'])->name('web.forms-library.filter');
 
 // Resources (uses dynamic pages + blog articles already)
 // Compliance Calendar
 Route::get('/compliance-calendar', [WebController::class, 'complianceCalendar'])->name('web.compliance-calendar');
+
+// EIN Guide
+Route::get('/ein-guide', [WebController::class, 'einGuide'])->name('web.ein-guide');
 
 Route::get('/blog', [WebController::class, 'blog'])->name('web.blog');
 Route::get('/blog/{slug}', [WebController::class, 'blogDetail'])->name('web.blog-detail');

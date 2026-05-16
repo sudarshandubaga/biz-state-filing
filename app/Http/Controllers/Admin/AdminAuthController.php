@@ -30,7 +30,16 @@ class AdminAuthController extends Controller
         $request->validate([
             'login_name' => ['required', 'string'],
             'password' => ['required'],
+            'captcha' => ['required', 'string'],
         ]);
+
+        // Validate CAPTCHA
+        $captchaCode = session('captcha_code');
+        if (empty($captchaCode) || strtoupper($request->captcha) !== $captchaCode) {
+            return back()->withErrors([
+                'captcha' => 'The security code you entered is incorrect.',
+            ])->onlyInput('login_name');
+        }
 
         $credentials = [
             'login_name' => $request->login_name,
@@ -38,6 +47,8 @@ class AdminAuthController extends Controller
         ];
 
         if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
+            // Clear CAPTCHA code after successful login
+            session()->forget('captcha_code');
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }

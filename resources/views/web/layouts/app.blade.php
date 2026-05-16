@@ -14,6 +14,8 @@
         {!! getSetting('header_scripts') !!}
     @endif
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    @stack('styles')
 </head>
 
 <body>
@@ -111,20 +113,31 @@
                         <a class="nav-link" href="{{ route('web.compliance-calendar') }}">Compliance Calendar</a>
                     </li>
 
-                    <!-- TAX FORMS -->
+                    <!-- FORMS LIBRARY -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/tax-forms" data-bs-toggle="dropdown">
-                            Tax Forms
+                        <a class="nav-link dropdown-toggle" href="{{ route('web.forms-library') }}" data-bs-toggle="dropdown">
+                            Forms Library
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/tax-forms">All Tax Forms</a></li>
+                            <li><a class="dropdown-item" href="{{ route('web.forms-library') }}">All Forms</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://www.irs.gov/forms-instructions" target="_blank">
-                                    IRS Forms (Official)
-                                </a></li>
-                            <li><a class="dropdown-item" href="/state-tax-forms">State Tax Forms</a></li>
+                            <li>
+                                <a href="#" class="dropdown-item">Article of Organization</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Article of Incorporation</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Annual Reports</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('web.tax-forms') }}" class="dropdown-item">Tax Forms</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Dissolution Forms</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -170,8 +183,8 @@
 
                     <!-- Mobile Start My LLC Button -->
                     <li class="nav-item lg:hidden pt-2 pb-4">
-                        <a href="{{ route('formation.start') }}"
-                            class="button-primary w-full text-center block">Start My
+                        <a href="{{ route('formation.start') }}" class="button-primary w-full text-center block">Start
+                            My
                             LLC</a>
                     </li>
 
