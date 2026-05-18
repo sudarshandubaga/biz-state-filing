@@ -151,6 +151,9 @@ Route::get('/tax-forms', [WebController::class, 'onlyTaxForms'])->name('web.tax-
 Route::get('/forms-library/{state}/{entityType?}', [WebController::class, 'taxForms'])->name('web.forms-library.filter');
 
 // Resources (uses dynamic pages + blog articles already)
+// Start a Business
+Route::get('/start-a-business', [WebController::class, 'startBusiness'])->name('web.start-business');
+
 // Compliance Calendar
 Route::get('/compliance-calendar', [WebController::class, 'complianceCalendar'])->name('web.compliance-calendar');
 
@@ -167,6 +170,18 @@ Route::get('/captcha/refresh', [CaptchaController::class, 'refresh'])->name('cap
 // Contact
 Route::get('/contact', [WebController::class, 'contact'])->name('web.contact');
 Route::post('/contact', [WebController::class, 'sendContact'])->name('web.contact.send');
+
+// Business License Requirements
+Route::get('/business-license-requirements', [WebController::class, 'businessLicenseRequirements'])->name('web.business-license-requirements');
+
+// Registered Agent Requirements
+Route::get('/registered-agent-requirements', [WebController::class, 'registeredAgentRequirements'])->name('web.registered-agent-requirements');
+
+// Startup Cost Calculator
+Route::get('/startup-cost-calculator', [WebController::class, 'startupCostCalculator'])->name('web.startup-cost-calculator');
+
+// State Filing Deadlines
+Route::get('/state-filing-deadlines', [WebController::class, 'stateFilingDeadlines'])->name('web.state-filing-deadlines');
 
 // Dynamic Pages (must be at the end to avoid conflicting with other routes)
 Route::get('/{slug}', [WebController::class, 'pageDetail'])->name('web.page');

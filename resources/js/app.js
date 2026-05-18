@@ -1,7 +1,7 @@
 import "./bootstrap";
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Dropdown functionality
+    // Dropdown functionality for standard dropdowns and mega menus
     const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
 
     dropdownToggles.forEach(function (toggle) {
@@ -10,18 +10,24 @@ document.addEventListener("DOMContentLoaded", function () {
             e.stopPropagation();
 
             const parent = this.closest(".nav-item");
+            if (!parent) return;
+
             const isOpen = parent.classList.contains("show");
 
-            // Close all other dropdowns
+            // Close all other dropdowns/mega-menus at the same level
             document
-                .querySelectorAll(".nav-item.show")
+                .querySelectorAll(".navbar-nav > .nav-item.show")
                 .forEach(function (item) {
-                    item.classList.remove("show");
+                    if (item !== parent) {
+                        item.classList.remove("show");
+                    }
                 });
 
             // Toggle current dropdown
             if (!isOpen) {
                 parent.classList.add("show");
+            } else {
+                parent.classList.remove("show");
             }
         });
     });
@@ -57,5 +63,30 @@ document.addEventListener("DOMContentLoaded", function () {
             navbarNav.classList.toggle("mobile-open");
             this.classList.toggle("active");
         });
+
+        // Close mobile menu when a non-dropdown link is clicked
+        navbarNav
+            .querySelectorAll(".nav-link:not(.dropdown-toggle)")
+            .forEach(function (link) {
+                link.addEventListener("click", function () {
+                    navbarNav.classList.remove("mobile-open");
+                    mobileMenuToggle.classList.remove("active");
+                });
+            });
     }
+
+    // Handle sub-dropdown toggles on mobile (touch devices)
+    const subDropdownToggles = document.querySelectorAll(".nav-link-sub");
+    subDropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener("click", function (e) {
+            // Only handle on mobile
+            if (window.innerWidth < 1024) {
+                e.preventDefault();
+                const parent = this.closest(".nav-item-sub");
+                if (parent) {
+                    parent.classList.toggle("show");
+                }
+            }
+        });
+    });
 });

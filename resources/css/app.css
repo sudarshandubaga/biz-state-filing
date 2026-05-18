@@ -10,10 +10,35 @@
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+
+    --color-brand-50: #f0f4fa;
+    --color-brand-100: #dae4f2;
+    --color-brand-200: #b6cbe5;
+    --color-brand-300: #8aacd4;
+    --color-brand-400: #5c8dc3;
+    --color-brand-500: #3b72b0;
+    --color-brand-600: #20559a;
+    --color-brand-700: #154073;
+    --color-brand-800: #12355e;
+    --color-brand-900: #0f2b4c;
+    --color-brand-950: #0a1d33;
+
+    /* Override Tailwind blue palette to use #154073 as primary */
+    --color-blue-50: #f0f4fa;
+    --color-blue-100: #dae4f2;
+    --color-blue-200: #b6cbe5;
+    --color-blue-300: #8aacd4;
+    --color-blue-400: #5c8dc3;
+    --color-blue-500: #3b72b0;
+    --color-blue-600: #20559a;
+    --color-blue-700: #154073;
+    --color-blue-800: #12355e;
+    --color-blue-900: #0f2b4c;
+    --color-blue-950: #0a1d33;
 }
 
 .button-primary {
-    @apply inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-500 transition text-nowrap;
+    @apply inline-block bg-gradient-to-r from-blue-700 to-blue-600 text-white px-5 py-2.5 rounded-lg hover:from-blue-800 hover:to-blue-700 transition-all text-nowrap text-sm font-semibold shadow-md hover:shadow-lg active:scale-95;
 }
 
 /* Styled select dropdown with caret icon */
@@ -30,108 +55,320 @@ select {
 
 /* Mobile Menu Toggle Button */
 .mobile-menu-toggle {
-    @apply flex flex-col justify-center items-center w-8 h-8 bg-transparent cursor-pointer p-0 border-0 lg:hidden;
+    @apply flex flex-col justify-center items-center w-9 h-9 bg-gray-50 rounded-lg cursor-pointer p-0 border border-gray-200 lg:hidden transition-all;
 
     .bar {
-        @apply block w-6 h-0.5 bg-gray-700 rounded transition-all duration-300;
+        @apply block w-5 h-0.5 bg-gray-600 rounded transition-all duration-200;
     }
 
-    &.active .bar:nth-child(1) {
-        @apply rotate-45 translate-y-2;
+    .bar + .bar {
+        @apply mt-1;
     }
 
-    &.active .bar:nth-child(2) {
-        @apply opacity-0;
+    &:hover {
+        @apply bg-gray-100 border-gray-300;
     }
 
-    &.active .bar:nth-child(3) {
-        @apply -rotate-45 -translate-y-2;
+    &.active {
+        @apply bg-blue-50 border-blue-200;
+
+        .bar {
+            @apply bg-blue-600;
+        }
+
+        .bar:nth-child(1) {
+            @apply rotate-45 translate-y-1.5;
+        }
+
+        .bar:nth-child(2) {
+            @apply opacity-0;
+        }
+
+        .bar:nth-child(3) {
+            @apply -rotate-45 -translate-y-1.5;
+        }
     }
 }
 
+/* ============================================
+   TOPBAR STYLES
+   ============================================ */
+.topbar {
+    @apply bg-gradient-to-r from-gray-900 to-gray-800 text-white text-xs;
+}
+
+/* ============================================
+   MAIN NAVIGATION STYLES
+   ============================================ */
 .navbar-nav {
-    @apply flex gap-4;
+    @apply flex items-center gap-0;
+
+    /* Mega menu parent: make nav-item static so .mega-menu aligns to nav */
+    .nav-item.mega-cols-2,
+    .nav-item.mega-cols-3,
+    .nav-item.mega-cols-4,
+    .nav-item.mega-cols-5,
+    .nav-item.mega-cols-6 {
+        position: static;
+    }
 
     .nav-item {
         @apply relative;
 
         .nav-link {
-            @apply text-black font-medium hover:text-blue-800 transition inline-block rounded text-nowrap;
+            @apply text-gray-700 font-medium hover:text-blue-700 transition-all inline-block rounded-lg text-nowrap px-3.5 py-2 text-sm hover:bg-blue-50/60;
 
             &.dropdown-toggle {
-                @apply after:content-[''] after:inline-block after:w-0 after:h-0 after:border-l-4 after:border-r-4 after:border-t-4 after:border-l-transparent after:border-r-transparent after:border-t-black after:ml-2 after:align-middle flex items-center whitespace-nowrap;
+                @apply after:content-[''] after:inline-block after:w-0 after:h-0 after:border-l-[4px] after:border-r-[4px] after:border-t-[4px] after:border-l-transparent after:border-r-transparent after:border-t-gray-500 after:ml-1.5 after:align-middle flex items-center whitespace-nowrap;
+            }
+
+            &.active {
+                @apply text-blue-700 bg-blue-50;
+            }
+
+            &:hover {
+                @apply text-blue-700;
+            }
+        }
+
+        /* ============================================
+           STANDARD DROPDOWN
+           ============================================ */
+        .dropdown-menu {
+            @apply absolute left-0 top-full min-w-[240px] bg-white shadow-xl rounded-xl py-2 z-50 hidden border border-gray-100;
+            max-height: 75vh;
+            overflow-y: auto;
+
+            .dropdown-item {
+                @apply block w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-all hover:pl-5;
+            }
+
+            .dropdown-item-heading {
+                @apply block w-full text-left px-4 py-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider cursor-default;
+            }
+
+            .dropdown-divider {
+                @apply border-t border-gray-100 my-1.5 mx-3;
+            }
+        }
+
+        /* ============================================
+           MEGA MENU
+           Position fixed relative to viewport to avoid clipping
+           when the dropdown-parent is near the edge of the nav
+           ============================================ */
+        .mega-menu {
+            @apply bg-white shadow-2xl rounded-2xl py-7 z-50 border border-gray-100 hidden;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100vw - 32px);
+            max-width: 1320px;
+            max-height: 85vh;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+        }
+
+        .mega-menu-grid {
+            @apply grid gap-1 px-8;
+        }
+
+        .mega-menu-column {
+            @apply min-w-0;
+
+            .mega-menu-heading {
+                @apply block text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 pb-2.5 border-b border-gray-100 cursor-default;
+            }
+
+            .mega-menu-item {
+                @apply block text-sm text-gray-600 py-2 px-3 rounded-lg hover:text-blue-800 hover:bg-blue-50 hover:translate-x-0.5 transition-all;
+
+                &.mega-menu-item-bold {
+                    @apply font-semibold text-gray-900;
+                }
+
+                &.mega-menu-item-icon {
+                    @apply flex items-center gap-2.5;
+                }
+            }
+
+            .mega-menu-subheading {
+                @apply block text-xs font-semibold text-gray-600 uppercase tracking-wider mt-4 mb-2 px-3 cursor-default;
+            }
+
+            .mega-menu-highlight {
+                @apply block text-sm py-2.5 px-3 rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 font-semibold text-blue-800 hover:from-blue-100 hover:to-indigo-100 transition-all;
+            }
+        }
+
+        /* Show states */
+        &.show .dropdown-menu,
+        &.show .mega-menu {
+            @apply block;
+        }
+
+        &.show .nav-link.dropdown-toggle::after {
+            @apply border-t-transparent border-b-[4px] border-b-blue-600;
+        }
+    }
+
+    /* ============================================
+       MEGA MENU COLUMN COUNTS
+       ============================================ */
+    .nav-item.mega-cols-2 .mega-menu-grid {
+        @apply grid-cols-2;
+    }
+    .nav-item.mega-cols-3 .mega-menu-grid {
+        @apply grid-cols-3;
+    }
+    .nav-item.mega-cols-4 .mega-menu-grid {
+        @apply grid-cols-4;
+    }
+    .nav-item.mega-cols-5 .mega-menu-grid {
+        @apply grid-cols-5;
+    }
+    .nav-item.mega-cols-6 .mega-menu-grid {
+        @apply grid-cols-6;
+    }
+}
+
+/* ============================================
+   DESKTOP HOVER BEHAVIOR (1024px+)
+   ============================================ */
+@media (min-width: 1024px) {
+    .mobile-menu-toggle {
+        @apply hidden;
+    }
+
+    .navbar-nav {
+        .nav-item {
+            &:hover {
+                > .dropdown-menu {
+                    @apply block;
+                }
+                > .mega-menu {
+                    @apply block;
+                }
+            }
+
+            .nav-link:hover + .dropdown-menu,
+            .nav-link:hover + .mega-menu {
+                @apply block;
+            }
+        }
+    }
+
+    /* Entrance animation for standard dropdowns */
+    .navbar-nav .nav-item {
+        .dropdown-menu {
+            @apply opacity-0 invisible transition-all duration-200;
+            transform: translateY(6px);
+        }
+
+        &:hover {
+            > .dropdown-menu {
+                @apply opacity-100 visible;
+                transform: translateY(0);
             }
         }
 
         &.show {
-            .dropdown-menu {
-                @apply block;
-            }
-
-            .nav-link.dropdown-toggle::after {
-                @apply border-t-transparent border-b-4 border-b-black;
-            }
-        }
-
-        .dropdown-menu {
-            @apply absolute left-0 top-full min-w-[200px] bg-white shadow-lg rounded-lg py-2 z-50 hidden;
-            max-height: 70vh;
-            overflow-y: auto;
-
-            .dropdown-item {
-                @apply block w-full text-left px-4 py-2 text-black hover:bg-blue-50 hover:text-blue-800 transition;
-            }
-
-            .dropdown-divider {
-                @apply border-t border-gray-200 my-2;
+            > .dropdown-menu {
+                @apply opacity-100 visible;
+                transform: translateY(0);
             }
         }
     }
 }
 
-/* Responsive Styles - Mobile (below 1024px) */
+/* ============================================
+   MOBILE / RESPONSIVE STYLES (below 1024px)
+   ============================================ */
 @media (max-width: 1023px) {
     .navbar-nav {
-        @apply fixed top-full left-0 right-0 bg-white shadow-lg flex-col gap-0 max-h-[calc(100vh-80px)] overflow-y-auto hidden;
+        @apply fixed top-[120px] left-3 right-3 bg-white shadow-2xl flex-col gap-0 max-h-[calc(100vh-140px)] overflow-y-auto hidden z-50 rounded-2xl border border-gray-100;
 
         &.mobile-open {
             @apply flex;
         }
 
         .nav-item {
-            @apply w-full border-t border-gray-100;
+            @apply w-full border-b border-gray-50 last:border-b-0;
 
             .nav-link {
-                @apply block w-full py-3 px-4;
+                @apply block w-full py-3.5 px-5 text-sm rounded-none;
             }
 
+            .nav-link.dropdown-toggle {
+                @apply justify-between;
+
+                &::after {
+                    @apply border-t-gray-400 ml-auto;
+                }
+            }
+
+            /* Standard dropdown on mobile */
             .dropdown-menu {
-                @apply static shadow-none rounded-none pl-8;
+                @apply static shadow-none border-0 rounded-none py-0;
+                max-height: none;
+                overflow: visible;
+
+                .dropdown-item {
+                    @apply pl-10 py-2.5 text-sm;
+                }
+
+                .dropdown-divider {
+                    @apply mx-6;
+                }
             }
 
-            &.show .dropdown-menu {
-                @apply block;
+            /* Mega menu on mobile */
+            .mega-menu {
+                @apply static shadow-none border-0 rounded-none;
+                width: 100%;
+                max-width: 100%;
+                transform: none;
+                left: 0;
+                padding: 8px 16px;
+                max-height: none;
+                overflow: visible;
             }
-        }
-    }
-}
 
-/* Desktop Styles (1024px and above) */
-@media (min-width: 1024px) {
-    .mobile-menu-toggle {
-        @apply hidden;
-        display: none !important;
-    }
+            .mega-menu-grid {
+                @apply grid-cols-1 gap-1 px-0;
+            }
 
-    .navbar-nav {
-        @apply flex-row;
+            .mega-menu-column {
+                .mega-menu-heading {
+                    @apply mb-1;
+                }
+            }
 
-        .nav-item {
-            &:hover {
-                .dropdown-menu {
+            &.show {
+                .dropdown-menu,
+                .mega-menu {
                     @apply block;
                 }
             }
         }
     }
+}
+
+/* ============================================
+   SEARCH BAR STYLES
+   ============================================ */
+.search-toggle {
+    @apply text-gray-600 hover:text-blue-800 transition cursor-pointer p-2 rounded-lg hover:bg-gray-100;
+}
+
+/* ============================================
+   LOGO ANIMATION
+   ============================================ */
+.navbar-logo {
+    @apply transition-all duration-200;
+}
+
+.navbar-logo:hover {
+    @apply opacity-90;
 }

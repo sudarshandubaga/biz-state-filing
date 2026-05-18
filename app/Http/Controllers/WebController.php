@@ -19,7 +19,7 @@ class WebController extends Controller
         $states = State::where('status', true)->orderBy('state_name')->take(6)->get();
         $entityTypes = EntityType::where('status', true)->take(4)->get();
         $industries = Industry::where('status', true)->take(6)->get();
-        
+
         return view('web.screens.home', compact('states', 'entityTypes', 'industries'));
     }
 
@@ -66,7 +66,7 @@ class WebController extends Controller
         $query = TaxForm::with('state')->where('status', true);
 
         if ($state) {
-            $query->whereHas('state', function($q) use ($state) {
+            $query->whereHas('state', function ($q) use ($state) {
                 $q->where('state_slug', $state);
             });
         }
@@ -77,8 +77,17 @@ class WebController extends Controller
 
         $forms = $query->orderBy('form_name')->get();
         $states = State::where('status', true)->orderBy('state_name')->get();
-        
+
         return view('web.screens.forms-library', compact('forms', 'states'));
+    }
+
+    public function startBusiness()
+    {
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $entityTypes = EntityType::where('status', true)->get();
+        $industries = Industry::where('status', true)->take(8)->get();
+
+        return view('web.screens.start-business', compact('states', 'entityTypes', 'industries'));
     }
 
     public function complianceCalendar(Request $request)
@@ -95,7 +104,7 @@ class WebController extends Controller
 
         $deadlines = $query->orderBy('fixed_month')->orderBy('fixed_day')->get();
         $states = State::where('status', true)->orderBy('state_name')->get();
-        
+
         $entityTypes = ComplianceDeadline::where('status', true)
             ->whereNotNull('entity_type')
             ->distinct()
@@ -131,7 +140,7 @@ class WebController extends Controller
 
         $forms = $query->orderBy('form_name')->get();
         $states = State::where('status', true)->orderBy('state_name')->get();
-        
+
         return view('web.screens.tax-forms', compact('forms', 'states'));
     }
 
@@ -140,24 +149,24 @@ class WebController extends Controller
         $query = Blog::where('status', 'published');
 
         if ($request->filled('category')) {
-            $query->whereHas('categories', function($q) use ($request) {
+            $query->whereHas('categories', function ($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
 
         if ($request->filled('tag')) {
-            $query->whereHas('tags', function($q) use ($request) {
+            $query->whereHas('tags', function ($q) use ($request) {
                 $q->where('slug', $request->tag);
             });
         }
 
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('content', 'like', '%' . $request->search . '%');
+                ->orWhere('content', 'like', '%' . $request->search . '%');
         }
 
         $blogs = $query->orderBy('created_at', 'desc')->paginate(10);
-        
+
         $blogCategories = \App\Models\BlogCategory::withCount('blogs')->get();
         $blogTags = \App\Models\BlogTag::all();
         $archives = Blog::where('status', 'published')
@@ -175,7 +184,7 @@ class WebController extends Controller
         $blog = Blog::where('slug', $slug)->firstOrFail();
         $blogCategories = \App\Models\BlogCategory::withCount('blogs')->get();
         $blogTags = \App\Models\BlogTag::all();
-        
+
         return view('web.screens.blog-detail', compact('blog', 'blogCategories', 'blogTags'));
     }
 
@@ -183,6 +192,37 @@ class WebController extends Controller
     {
         $page = Page::where('slug', $slug)->firstOrFail();
         return view('web.screens.page', compact('page'));
+    }
+
+    public function businessLicenseRequirements()
+    {
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        return view('web.screens.business-license-requirements', compact('states'));
+    }
+
+    public function registeredAgentRequirements()
+    {
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        return view('web.screens.registered-agent-requirements', compact('states'));
+    }
+
+    public function startupCostCalculator()
+    {
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        return view('web.screens.startup-cost-calculator', compact('states'));
+    }
+
+    public function stateFilingDeadlines()
+    {
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $deadlines = ComplianceDeadline::with('state')
+            ->where('status', true)
+            ->orderBy('fixed_month')
+            ->orderBy('fixed_day')
+            ->get();
+        $entityTypes = EntityType::where('status', true)->get();
+
+        return view('web.screens.state-filing-deadlines', compact('states', 'deadlines', 'entityTypes'));
     }
 
     public function resources()
@@ -211,7 +251,7 @@ class WebController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
         ]);
-        
+
         return back()->with('success', 'Your message has been sent successfully!');
     }
 }
