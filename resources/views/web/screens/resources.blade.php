@@ -1,12 +1,14 @@
 @extends('web.layouts.app')
 @section('title', 'Resources – BizStateFiling')
+
+@section('page_title', 'Business Resources & Guides')
+
+@section('page_subtitle', 'Learn everything about business formation, compliance, and taxes with our expert guides.')
+
 @section('content')
     <section class="py-12 bg-gray-50 min-h-screen">
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Business Resources & Guides</h1>
-                <p class="text-gray-600 mb-8">Learn everything about business formation, compliance, and taxes with our
-                    expert guides.</p>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div class="md:col-span-1">
                         <div class="bg-white rounded-lg shadow-sm p-4 sticky top-24">

@@ -1,20 +1,16 @@
 @extends('web.layouts.app')
 
 @section('title', 'Startup Cost Calculator | StateFilingDeadlines')
-@section('meta_description', 'Estimate your initial business investment including state fees, registered agent,
+@section('meta_description',
+    'Estimate your initial business investment including state fees, registered agent,
     equipment, and legal compliance costs with our free startup cost calculator.')
 
+@section('page_title', 'Startup Cost Calculator')
+
+@section('page_subtitle', 'Estimate your initial business investment including state fees, equipment, and legal
+    compliance costs.')
+
 @section('content')
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white py-16">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Startup Cost Calculator</h1>
-                <p class="text-lg text-gray-300">Estimate your initial business investment including state fees, equipment,
-                    and legal compliance costs.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-10">

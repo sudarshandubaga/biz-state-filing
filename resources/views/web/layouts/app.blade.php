@@ -89,30 +89,6 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                     <!-- ============================================
-                    9. ABOUT (Dropdown)
-                    ============================================ -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#">
-                            <i class="fa-solid fa-circle-info text-blue-600 mr-1.5 text-xs"></i>
-                            About
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/about">ℹ️ About Us</a></li>
-                            <li><a class="dropdown-item" href="/editorial-guidelines">📝 Editorial Guidelines</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{ route('web.contact') }}">📧 Contact Us</a></li>
-                            <li><a class="dropdown-item" href="/advertise">📢 Advertise</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/privacy-policy">🔒 Privacy Policy</a></li>
-                            <li><a class="dropdown-item" href="/terms-of-service">📜 Terms of Service</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- ============================================
                     1. START A BUSINESS (Mega Menu)
                     ============================================ -->
                     <li class="nav-item mega-cols-4">
@@ -632,16 +608,6 @@
                         </ul>
                     </li>
 
-                    <!-- ============================================
-                    8. BLOG (Simple Link)
-                    ============================================ -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('web.blog') }}">
-                            <i class="fa-solid fa-newspaper text-blue-600 mr-1.5 text-xs"></i>
-                            Blog
-                        </a>
-                    </li>
-
                     <!-- Mobile Start My LLC (visible only on mobile) -->
                     <li class="nav-item lg:hidden pt-3 pb-4 px-4">
                         <a href="{{ route('formation.start') }}" class="button-primary w-full text-center block">
@@ -654,52 +620,119 @@
         </div>
     </nav>
 
+    <!-- ============================================
+    PAGE HEADER (Inner pages only - uses sections set by each screen)
+    ============================================ -->
+    @hasSection('page_title')
+        <section
+            class="relative min-h-[260px] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+            <div
+                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE4YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzem0wIDM2YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzek0xOCAzNmMxLjY1NyAwIDMtMS4zNDMgMy0zcy0xLjM0My0zLTMtMy0zIDEuMzQzLTMgMyAxLjM0MyAzIDMgM3oiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30">
+            </div>
+            <div class="relative container mx-auto px-4 py-14">
+                <div class="max-w-3xl mx-auto text-center">
+                    @hasSection('page_badge')
+                        <div
+                            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-5">
+                            @yield('page_badge')
+                        </div>
+                    @endif
+                    <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                        @yield('page_title')
+                    </h1>
+                    @hasSection('page_subtitle')
+                        <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+                            @yield('page_subtitle')
+                        </p>
+                    @endif
+                </div>
+            </div>
+        </section>
+    @endif
+
     @yield('content')
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 text-white py-12">
+    <!-- ============================================
+    FOOTER
+    ============================================ -->
+    <footer class="bg-gray-900 text-white pt-14 pb-6">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+            <!-- Main Footer Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
 
-                <div class="lg:col-span-4">
-                    <h3 class="text-xl font-bold mb-4">StateFilingDeadlines</h3>
-                    <p class="text-gray-400">Your trusted resource for business formation, licensing, and compliance.
-                    </p>
+                <!-- Column 1: Company Info -->
+                <div class="col-span-2 md:col-span-1">
+                    <a href="{{ route('home') }}" class="inline-block mb-4">
+                        <img src="{{ getSetting('logo') ? asset('uploads/settings/' . getSetting('logo')) : asset('imgs/logo.webp') }}"
+                            alt="{{ getSetting('site_name') }}" class=" w-full brightness-0 invert">
+                    </a>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Your trusted resource for business formation,
+                        licensing, and compliance.</p>
+                    <div class="flex items-center gap-2 text-gray-500 text-sm">
+                        <i class="fa-solid fa-envelope text-gray-600"></i>
+                        <a href="mailto:{{ getSetting('contact_email', 'info@statefilingdeadlines.com') }}"
+                            class="hover:text-white transition-colors">{{ getSetting('contact_email', 'info@statefilingdeadlines.com') }}</a>
+                    </div>
                 </div>
 
-                <div class="lg:col-span-2">
-                    <h4 class="font-bold mb-4 text-gray-300">Explore</h4>
-                    <ul class="space-y-2">
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="{{ route('web.start-business') }}"
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Start a Business</a>
+                        </li>
                         <li><a href="{{ route('web.states') }}"
-                                class="text-gray-400 hover:text-white transition-colors">States</a></li>
+                                class="text-gray-400 hover:text-white transition-colors text-sm">States</a></li>
                         <li><a href="{{ route('web.entity-types') }}"
-                                class="text-gray-400 hover:text-white transition-colors">Entity Types</a></li>
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Entity Types</a></li>
                         <li><a href="{{ route('web.industries') }}"
-                                class="text-gray-400 hover:text-white transition-colors">Industries</a></li>
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Industries</a></li>
+                        <li><a href="{{ route('web.forms-library') }}"
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Forms</a></li>
                         <li><a href="{{ route('web.blog') }}"
-                                class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Blog</a></li>
                     </ul>
                 </div>
 
-                <div class="lg:col-span-2">
-                    <h4 class="font-bold mb-4 text-gray-300">Legal</h4>
-                    <ul class="space-y-2">
+                <!-- Column 3: About & Blog -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm mb-4">About</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition-colors text-sm">About
+                                Us</a></li>
+
+                        <li><a href="/editorial-guidelines"
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Editorial
+                                Guidelines</a></li>
+                        <li><a href="/advertise"
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Advertise</a></li>
+                        <li><a href="{{ route('web.contact') }}"
+                                class="text-gray-400 hover:text-white transition-colors text-sm">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Legal & Support -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm mb-4">Legal</h4>
+                    <ul class="space-y-2.5">
                         @php
                             $legalPages = ($navPages ?? [])->filter(function ($p) {
                                 return in_array($p->slug, ['privacy-policy', 'terms-conditions', 'disclaimer']);
                             });
                         @endphp
-                        @foreach ($legalPages as $legalPage)
+                        @forelse ($legalPages as $legalPage)
                             <li><a href="{{ route('web.page', $legalPage->slug) }}"
-                                    class="text-gray-400 hover:text-white transition-colors">{{ $legalPage->title }}</a>
+                                    class="text-gray-400 hover:text-white transition-colors text-sm">{{ $legalPage->title }}</a>
                             </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <div class="lg:col-span-4">
-                    <h4 class="font-bold mb-4 text-gray-300">Support</h4>
-                    <ul class="space-y-2">
+                        @empty
+                            <li><a href="/privacy-policy"
+                                    class="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
+                            </li>
+                            <li><a href="/terms-of-service"
+                                    class="text-gray-400 hover:text-white transition-colors text-sm">Terms of
+                                    Service</a></li>
+                        @endforelse
                         @php
                             $supportPages = ($navPages ?? [])->filter(function ($p) {
                                 return in_array($p->slug, ['help-center', 'affiliate-disclosure']);
@@ -707,19 +740,26 @@
                         @endphp
                         @foreach ($supportPages as $supportPage)
                             <li><a href="{{ route('web.page', $supportPage->slug) }}"
-                                    class="text-gray-400 hover:text-white transition-colors">{{ $supportPage->title }}</a>
+                                    class="text-gray-400 hover:text-white transition-colors text-sm">{{ $supportPage->title }}</a>
                             </li>
                         @endforeach
-                        <li><a href="{{ route('web.contact') }}"
-                                class="text-gray-400 hover:text-white transition-colors">Contact Us</a>
-                        </li>
                     </ul>
                 </div>
 
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 StateFilingDeadlines — All Rights Reserved.</p>
+            <!-- Bottom Bar -->
+            <div
+                class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="text-gray-500 text-xs">&copy; {{ date('Y') }}
+                    {{ getSetting('site_name', 'StateFilingDeadlines') }}. All rights reserved.</p>
+                <div class="flex items-center gap-3 text-xs">
+                    <a href="/privacy-policy" class="text-gray-500 hover:text-gray-300 transition-colors">Privacy</a>
+                    <span class="text-gray-700">|</span>
+                    <a href="/terms-of-service" class="text-gray-500 hover:text-gray-300 transition-colors">Terms</a>
+                    <span class="text-gray-700">|</span>
+                    <a href="/sitemap.xml" class="text-gray-500 hover:text-gray-300 transition-colors">Sitemap</a>
+                </div>
             </div>
         </div>
     </footer>

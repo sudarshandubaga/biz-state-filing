@@ -1,56 +1,21 @@
 @extends('web.layouts.app')
 
 @section('title', 'State Filing Deadlines 2026 | StateFilingDeadlines')
-@section('meta_description', 'View 2026 business filing deadlines for all US states for LLCs, Corporations, and
+@section('meta_description',
+    'View 2026 business filing deadlines for all US states for LLCs, Corporations, and
     Nonprofits. Avoid late fees with our compliance calendar.')
 
+@section('page_badge')
+    <i class="fa-solid fa-calendar-check"></i>
+    2026 Compliance Season
+@endsection
+
+@section('page_title', 'State Filing Deadlines')
+
+@section('page_subtitle', 'Stay compliant with all 50 states. View annual report dates, tax filing deadlines, and
+    business renewal requirements for your entity type.')
+
 @section('content')
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white py-20">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-7">
-                    <div
-                        class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm mb-4">
-                        <i class="fa-solid fa-calendar-check"></i>
-                        2026 Compliance Season
-                    </div>
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">State Filing Deadlines</h1>
-                    <p class="text-lg text-gray-300 mb-6">Stay compliant with all 50 states. View annual report dates, tax
-                        filing deadlines, and business renewal requirements for your entity type.</p>
-                    <div class="flex flex-wrap gap-3">
-                        <a href="#deadlines-table"
-                            class="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-lg">
-                            <i class="fa-solid fa-calendar-days mr-2"></i>View Calendar
-                        </a>
-                        <a href="{{ route('web.forms-library') }}"
-                            class="inline-block border-2 border-white/30 hover:border-white/60 text-white px-6 py-3 rounded-lg font-semibold transition-all">
-                            <i class="fa-solid fa-file-lines mr-2"></i>Download Forms
-                        </a>
-                    </div>
-                </div>
-                <div class="lg:col-span-5 hidden lg:block">
-                    <div class="bg-white text-gray-900 p-6 rounded-xl shadow-2xl">
-                        <h5 class="font-bold text-lg mb-3 flex items-center gap-2 text-red-600">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Next Major Deadline
-                        </h5>
-                        <div class="flex justify-between items-center mb-4">
-                            <div>
-                                <p class="text-sm text-gray-500">Annual Report (LLC)</p>
-                                <h3 class="text-2xl font-bold">May 1, 2026</h3>
-                            </div>
-                            <span class="bg-red-100 text-red-700 text-sm font-bold px-3 py-1 rounded-full">In 14 Days</span>
-                        </div>
-                        <hr class="my-3">
-                        <a href="{{ route('formation.start') }}"
-                            class="block w-full bg-gray-900 hover:bg-gray-800 text-white text-center py-3 rounded-lg font-bold transition-all">
-                            File Your Report Now
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-12">

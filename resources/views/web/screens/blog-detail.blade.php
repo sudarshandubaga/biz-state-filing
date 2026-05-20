@@ -10,38 +10,29 @@
     @section('canonical', $blog->canonical_url)
 @endif
 
+@section('page_badge')
+    <a href="{{ route('web.blog') }}" class="hover:text-white transition-colors">Blog</a>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span>Article</span>
+@endsection
+
+@section('page_title', $blog->title)
+
+@section('page_subtitle')
+    <div class="flex items-center justify-center gap-4 text-white/70 text-sm">
+        @if ($blog->published_at)
+            <span>{{ $blog->published_at->format('F d, Y') }}</span>
+        @endif
+        @if ($blog->author)
+            <span>•</span>
+            <span>{{ $blog->author->name }}</span>
+        @endif
+    </div>
+@endsection
+
 @section('content')
-    <!-- HERO SECTION -->
-    <section class="relative min-h-[300px] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
-        <div
-            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE4YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzem0wIDM2YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzek0xOCAzNmMxLjY1NyAwIDMtMS4zNDMgMy0zcy0xLjM0My0zLTMtMy0zIDEuMzQzLTMgMyAxLjM0MyAzIDMgM3oiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30">
-        </div>
-        <div class="relative container mx-auto px-4 py-12">
-            <div class="max-w-3xl mx-auto text-center">
-                <div
-                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
-                    <a href="{{ route('web.blog') }}" class="hover:text-white transition-colors">Blog</a>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    <span>Article</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-                    {{ $blog->title }}
-                </h1>
-                <div class="flex items-center justify-center gap-4 text-white/70 text-sm">
-                    @if ($blog->published_at)
-                        <span>{{ $blog->published_at->format('F d, Y') }}</span>
-                    @endif
-                    @if ($blog->author)
-                        <span>•</span>
-                        <span>{{ $blog->author->name }}</span>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
-    </section>
 
     <!-- BLOG CONTENT -->
     <section class="py-12">

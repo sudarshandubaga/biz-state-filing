@@ -1,20 +1,15 @@
 @extends('web.layouts.app')
 
 @section('title', 'Registered Agent Requirements by State | StateFilingDeadlines')
-@section('meta_description', 'Statutory requirements, physical presence rules, and official statutes for registered
+@section('meta_description',
+    'Statutory requirements, physical presence rules, and official statutes for registered
     agents in all 50 states. Find your state\'s requirements.')
 
+@section('page_title', 'Registered Agent Requirements')
+
+@section('page_subtitle', 'Statutory requirements, physical presence rules, and official statutes for all 50 states.')
+
 @section('content')
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white py-20">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Registered Agent Requirements</h1>
-                <p class="text-lg text-gray-300">Statutory requirements, physical presence rules, and official statutes for
-                    all 50 states.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 pb-12" style="margin-top: -40px;">

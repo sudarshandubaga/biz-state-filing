@@ -8,33 +8,20 @@
 @section('meta_keywords', $entityType->seo_keywords ?? strtolower($entityType->name) . ' formation, ' .
     strtolower($entityType->name) . ' requirements, ' . strtolower($entityType->name) . ' filing')
 
+@section('page_badge')
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+        </path>
+    </svg>
+    Entity Type Guide
+@endsection
+
+@section('page_title', $entityType->name . ' Requirements')
+
+@section('page_subtitle', 'Learn how to form, register, and maintain a ' . $entityType->name . ' in any state.')
+
 @section('content')
-    <!-- HERO SECTION -->
-    <section class="relative min-h-[400px] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
-        <div
-            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE4YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzem0wIDM2YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzek0xOCAzNmMxLjY1NyAwIDMtMS4zNDMgMy0zcy0xLjM0My0zLTMtMy0zIDEuMzQzLTMgMyAxLjM0MyAzIDMgM3oiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30">
-        </div>
-        <div class="relative container mx-auto px-4 py-16">
-            <div class="max-w-3xl mx-auto text-center">
-                <div
-                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                        </path>
-                    </svg>
-                    Entity Type Guide
-                </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-                    {{ $entityType->name }} Requirements
-                </h1>
-                <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-                    Learn how to form, register, and maintain a {{ $entityType->name }} in any state.
-                </p>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
-    </section>
 
     <!-- ADVERTISEMENT SECTION -->
     <section class="py-6">

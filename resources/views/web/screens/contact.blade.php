@@ -6,15 +6,11 @@
     compliance requirements.')
 @section('meta_keywords', 'contact us, business filing help, support, customer service')
 
+@section('page_title', 'Contact Us')
+
+@section('page_subtitle', 'Have a question or need assistance? We\'d love to hear from you.')
+
 @section('content')
-    <!-- Page Header -->
-    <section class="bg-blue-900 text-white py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
-            <p class="text-xl text-blue-200 max-w-3xl mx-auto">Have a question or need assistance? We'd love to hear from
-                you.</p>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section class="py-16">
@@ -150,8 +146,7 @@
                     <div class="space-y-6">
                         <div class="flex items-start space-x-4">
                             <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>

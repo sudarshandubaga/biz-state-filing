@@ -2,39 +2,28 @@
 
 @section('title', 'Business Blog – Formation, Compliance & Filing Tips – StateFilingDeadlines')
 
-@section('meta_description', 'Expert articles on business formation, annual compliance, state filing deadlines,
+@section('meta_description',
+    'Expert articles on business formation, annual compliance, state filing deadlines,
     licenses, permits, and more.')
 
-@section('meta_keywords', 'business blog, LLC guide, business formation tips, compliance deadlines, business license
+@section('meta_keywords',
+    'business blog, LLC guide, business formation tips, compliance deadlines, business license
     guide')
 
+@section('page_badge')
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+        </path>
+    </svg>
+    Blog
+@endsection
+
+@section('page_title', 'Business Blog')
+
+@section('page_subtitle', 'Expert articles on business formation, compliance, state filing deadlines, and more.')
+
 @section('content')
-    <!-- HERO SECTION -->
-    <section class="relative min-h-[250px] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
-        <div
-            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE4YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzem0wIDM2YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzek0xOCAzNmMxLjY1NyAwIDMtMS4zNDMgMy0zcy0xLjM0My0zLTMtMy0zIDEuMzQzLTMgMyAxLjM0MyAzIDMgM3oiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30">
-        </div>
-        <div class="relative container mx-auto px-4 py-12">
-            <div class="max-w-3xl mx-auto text-center">
-                <div
-                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                        </path>
-                    </svg>
-                    Blog
-                </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-                    Business Blog
-                </h1>
-                <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-                    Expert articles on business formation, compliance, state filing deadlines, and more.
-                </p>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
-    </section>
 
     <!-- BLOG CONTENT -->
     <section class="py-12">

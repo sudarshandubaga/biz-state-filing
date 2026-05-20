@@ -1,20 +1,15 @@
 @extends('web.layouts.app')
 
 @section('title', 'Business License Requirements | StateFilingDeadlines')
-@section('meta_description', 'Identify the local, state, and federal permits required to operate your business legally.
+@section('meta_description',
+    'Identify the local, state, and federal permits required to operate your business legally.
     Common required permits for business compliance.')
 
+@section('page_title', 'Business License Requirements')
+
+@section('page_subtitle', 'Identify the local, state, and federal permits required to operate your business legally.')
+
 @section('content')
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white py-20">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Business License Requirements</h1>
-                <p class="text-lg text-gray-300">Identify the local, state, and federal permits required to operate your
-                    business legally.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 pb-12" style="margin-top: -60px;">

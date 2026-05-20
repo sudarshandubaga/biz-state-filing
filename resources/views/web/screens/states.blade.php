@@ -2,39 +2,28 @@
 
 @section('title', 'Business Filing Deadlines by State – StateFilingDeadlines')
 
-@section('meta_description', 'Find business formation, annual report, and compliance filing deadlines for every US
+@section('meta_description',
+    'Find business formation, annual report, and compliance filing deadlines for every US
     state.')
 
-@section('meta_keywords', 'state business filing, state filing deadlines, business formation by state, LLC filing,
+@section('meta_keywords',
+    'state business filing, state filing deadlines, business formation by state, LLC filing,
     annual report deadlines')
 
+@section('page_badge')
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
+        </path>
+    </svg>
+    States
+@endsection
+
+@section('page_title', 'Business Filing Deadlines by State')
+
+@section('page_subtitle', 'Find business formation, annual report, and compliance filing deadlines for every US state.')
+
 @section('content')
-    <!-- HERO SECTION -->
-    <section class="relative min-h-[300px] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
-        <div
-            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE4YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzem0wIDM2YzEuNjU3IDAgMy0xLjM0MyAzLTNzLTEuMzQzLTMtMy0zLTMgMS4zNDMtMyAzIDEuMzQzIDMgMyAzek0xOCAzNmMxLjY1NyAwIDMtMS4zNDMgMy0zcy0xLjM0My0zLTMtMy0zIDEuMzQzLTMgMyAxLjM0MyAzIDMgM3oiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30">
-        </div>
-        <div class="relative container mx-auto px-4 py-16">
-            <div class="max-w-3xl mx-auto text-center">
-                <div
-                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
-                        </path>
-                    </svg>
-                    States
-                </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-                    Business Filing Deadlines by State
-                </h1>
-                <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-                    Find business formation, annual report, and compliance filing deadlines for every US state.
-                </p>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
-    </section>
 
     <!-- STATES GRID -->
     <section class="py-16">

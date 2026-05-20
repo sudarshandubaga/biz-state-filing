@@ -1,6 +1,9 @@
 @extends('web.layouts.app')
 @section('title', $resource->seo_title ?? $resource->title . ' – BizStateFiling')
 @section('meta_description', $resource->seo_description ?? '')
+
+@section('page_title', $resource->title)
+
 @section('content')
     <section class="py-12 bg-gray-50 min-h-screen">
         <div class="container mx-auto px-4">
@@ -25,7 +28,6 @@
                                 class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">{{ $resource->state->state_name }}</span>
                         @endif
                     </div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $resource->title }}</h1>
                     @if ($resource->short_description)
                         <p class="text-lg text-gray-600 mb-6">{{ $resource->short_description }}</p>
                     @endif
