@@ -12,7 +12,9 @@ use App\Models\Blog;
 use App\Models\Page;
 use App\Models\Resource;
 use App\Models\TaxForm;
+use App\Models\EntityComparison;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class WebController extends Controller
 {
@@ -196,6 +198,11 @@ class WebController extends Controller
 
     public function pageDetail($slug)
     {
+        // Check if this is an entity comparison URL (e.g., llc-vs-s-corp)
+        if (str_contains($slug, '-vs-')) {
+            return $this->entityComparison($slug);
+        }
+
         $page = Page::where('slug', $slug)->firstOrFail();
         return view('web.screens.page', compact('page'));
     }
@@ -241,6 +248,76 @@ class WebController extends Controller
     {
         $resource = Resource::where('slug', $slug)->firstOrFail();
         return view('web.screens.resource-detail', compact('resource'));
+    }
+
+    /**
+     * Display the entity comparison page (e.g., /llc-vs-s-corp).
+     */
+    public function entityComparison($slug)
+    {
+        // Split on "-vs-" to get the two entity type slugs
+        $parts = explode('-vs-', $slug);
+
+        if (count($parts) !== 2) {
+            abort(404);
+        }
+
+        $slugPart1 = Str::slug($parts[0]);
+        $slugPart2 = Str::slug($parts[1]);
+
+        // Flexible matching - try exact slug first, then LIKE search to handle variations
+        // e.g. "s-corp" matches "s-corporation", "c-corp" matches "c-corporation"
+        $entityType1 = EntityType::where('status', true)
+            ->where(function ($q) use ($slugPart1) {
+                $q->where('slug', $slugPart1)
+                    ->orWhere('slug', 'like', $slugPart1 . '%')
+                    ->orWhere('slug', 'like', '%' . $slugPart1);
+            })
+            ->first();
+
+        $entityType2 = EntityType::where('status', true)
+            ->where(function ($q) use ($slugPart2) {
+                $q->where('slug', $slugPart2)
+                    ->orWhere('slug', 'like', $slugPart2 . '%')
+                    ->orWhere('slug', 'like', '%' . $slugPart2);
+            })
+            ->first();
+
+        if (!$entityType1 || !$entityType2) {
+            abort(404);
+        }
+
+        // Fetch comparisons from the database
+        $comparisons = EntityComparison::with(['entityType', 'comparedEntityType'])
+            ->where(function ($q) use ($entityType1, $entityType2) {
+                $q->where(function ($inner) use ($entityType1, $entityType2) {
+                    $inner->where('entity_type_id', $entityType1->id)
+                        ->where('compared_entity_type_id', $entityType2->id);
+                })->orWhere(function ($inner) use ($entityType1, $entityType2) {
+                    $inner->where('entity_type_id', $entityType2->id)
+                        ->where('compared_entity_type_id', $entityType1->id);
+                });
+            })
+            ->where('status', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $comparisonTitle = $entityType1->name . ' vs ' . $entityType2->name;
+
+        // SEO metadata
+        $seo = [
+            'title' => $comparisonTitle . ': Which Business Structure Is Right for You?',
+            'description' => "Compare {$entityType1->name} vs {$entityType2->name}. Learn about liability protection, taxation, formation costs, and more to choose the best business structure.",
+            'keywords' => "{$entityType1->name}, {$entityType2->name}, business entity comparison, {$slugPart1} vs {$slugPart2}, {$comparisonTitle}",
+        ];
+
+        return view('web.screens.entity-comparison', compact(
+            'entityType1',
+            'entityType2',
+            'comparisons',
+            'comparisonTitle',
+            'seo'
+        ));
     }
 
     public function contact()

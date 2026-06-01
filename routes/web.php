@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\TaxFormController;
 use App\Http\Controllers\Admin\AdController;
+use App\Http\Controllers\Admin\EntityComparisonController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BusinessFormationController;
 use App\Http\Controllers\CaptchaController;
@@ -47,6 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('state/bulk-action', [StateController::class, 'bulkAction'])->name('states.bulk-action');
         Route::post('country/bulk-action', [CountryController::class, 'bulkAction'])->name('countries.bulk-action');
         Route::post('entity-type/bulk-action', [EntityTypeController::class, 'bulkAction'])->name('entity-types.bulk-action');
+        Route::post('entity-comparison/bulk-action', [EntityComparisonController::class, 'bulkAction'])->name('entity-comparisons.bulk-action');
         Route::post('industry/bulk-action', [IndustryController::class, 'bulkAction'])->name('industries.bulk-action');
         Route::post('admin-user/bulk-action', [AdminUserController::class, 'bulkAction'])->name('admin-users.bulk-action');
 
@@ -54,6 +56,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('states', StateController::class);
         Route::resource('countries', CountryController::class);
         Route::resource('entity-types', EntityTypeController::class);
+        Route::resource('entity-comparisons', EntityComparisonController::class);
         Route::resource('industries', IndustryController::class);
 
         // Admin Users
