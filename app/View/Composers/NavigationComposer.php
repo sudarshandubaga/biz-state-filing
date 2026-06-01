@@ -2,6 +2,8 @@
 
 namespace App\View\Composers;
 
+use App\Helpers\CountryHelper;
+use App\Models\Country;
 use App\Models\EntityType;
 use App\Models\Industry;
 use App\Models\Page;
@@ -14,6 +16,7 @@ class NavigationComposer
     protected $entityTypes;
     protected $industries;
     protected $pages;
+    protected $countries;
 
     public function __construct()
     {
@@ -21,6 +24,7 @@ class NavigationComposer
         $this->entityTypes = EntityType::where('status', 1)->orderBy('name')->get();
         $this->industries = Industry::where('status', 1)->orderBy('name')->get();
         $this->pages = Page::where('status', 1)->orderBy('title')->get();
+        $this->countries = Country::where('status', 1)->orderBy('country_name')->get();
     }
 
     /**
@@ -28,9 +32,13 @@ class NavigationComposer
      */
     public function compose(View $view)
     {
+        $selectedCountry = CountryHelper::getSelectedCountry();
+
         $view->with('navStates', $this->states)
             ->with('navEntityTypes', $this->entityTypes)
             ->with('navIndustries', $this->industries)
-            ->with('navPages', $this->pages);
+            ->with('navPages', $this->pages)
+            ->with('navCountries', $this->countries)
+            ->with('selectedCountry', $selectedCountry);
     }
 }

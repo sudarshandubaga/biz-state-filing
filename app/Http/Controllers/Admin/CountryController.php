@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CountryController extends Controller
@@ -56,14 +57,25 @@ class CountryController extends Controller
     {
         $validated = $request->validate([
             'country_name' => 'required|string|max:120',
+            'short_name' => 'required|string|max:2',
             'country_slug' => 'nullable|string|max:120|unique:countries,country_slug',
+            'flag_image' => 'nullable|image|mimes:png,jpeg,gif,svg,webp|max:2048',
             'iso_code' => 'nullable|string|max:5',
             'currency' => 'nullable|string|max:10',
             'world_region' => 'nullable|string|max:100',
+            'status' => 'boolean',
         ]);
 
         if (empty($validated['country_slug'])) {
             $validated['country_slug'] = Str::slug($validated['country_name']);
+        }
+
+        // Handle flag image upload
+        if ($request->hasFile('flag_image')) {
+            $file = $request->file('flag_image');
+            $filename = time() . '_' . $validated['short_name'] . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/countries'), $filename);
+            $validated['flag_image'] = $filename;
         }
 
         Country::create($validated);
@@ -96,14 +108,30 @@ class CountryController extends Controller
     {
         $validated = $request->validate([
             'country_name' => 'required|string|max:120',
+            'short_name' => 'required|string|max:2',
             'country_slug' => 'nullable|string|max:120|unique:countries,country_slug,' . $country->id,
+            'flag_image' => 'nullable|image|mimes:png,jpeg,gif,svg,webp|max:2048',
             'iso_code' => 'nullable|string|max:5',
             'currency' => 'nullable|string|max:10',
             'world_region' => 'nullable|string|max:100',
+            'status' => 'boolean',
         ]);
 
         if (empty($validated['country_slug'])) {
             $validated['country_slug'] = Str::slug($validated['country_name']);
+        }
+
+        // Handle flag image upload
+        if ($request->hasFile('flag_image')) {
+            // Delete old flag image
+            if ($country->flag_image && file_exists(public_path('uploads/countries/' . $country->flag_image))) {
+                unlink(public_path('uploads/countries/' . $country->flag_image));
+            }
+
+            $file = $request->file('flag_image');
+            $filename = time() . '_' . $validated['short_name'] . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/countries'), $filename);
+            $validated['flag_image'] = $filename;
         }
 
         $country->update($validated);
@@ -121,6 +149,11 @@ class CountryController extends Controller
             return back()->with('error', 'Cannot delete country with associated states.');
         }
 
+        // Delete flag image
+        if ($country->flag_image && file_exists(public_path('uploads/countries/' . $country->flag_image))) {
+            unlink(public_path('uploads/countries/' . $country->flag_image));
+        }
+
         $country->delete();
 
         return redirect()->route('admin.countries.index')
@@ -132,7 +165,6 @@ class CountryController extends Controller
      */
     public function bulkAction(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'action' => 'required|in:delete,activate,deactivate',
             'ids' => 'required|array',

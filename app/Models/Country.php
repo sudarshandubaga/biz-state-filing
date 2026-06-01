@@ -32,4 +32,12 @@ class Country extends Model
     {
         return $this->hasMany(State::class);
     }
+
+    public function getFlagUrlAttribute()
+    {
+        if ($this->flag_image) {
+            return asset('uploads/countries/' . $this->flag_image);
+        }
+        return null;
+    }
 }

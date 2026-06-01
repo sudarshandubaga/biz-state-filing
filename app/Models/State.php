@@ -13,10 +13,15 @@ class State extends Model
     protected $casts = [
         'filing_fee' => 'decimal:2',
         'late_fee' => 'decimal:2',
+        'annual_llc_fee' => 'decimal:2',
         'report_required' => 'boolean',
         'status' => 'boolean',
         'deadline_month' => 'integer',
         'deadline_day' => 'integer',
+        'benefits_data' => 'array',
+        'industry_sectors_data' => 'array',
+        'execution_steps_data' => 'array',
+        'faqs_data' => 'array',
     ];
 
     protected static function boot()

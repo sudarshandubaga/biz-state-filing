@@ -16,12 +16,41 @@
     </div>
 
     <div>
+        <label for="short_name" class="block text-sm font-medium text-gray-700 mb-1">Short Name (2 Letters) <span
+                class="text-red-500">*</span></label>
+        <input type="text" name="short_name" id="short_name" value="{{ old('short_name', $country?->short_name) }}"
+            required maxlength="2"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('short_name') border-red-500 @enderror"
+            placeholder="e.g., US, IN, GB">
+        @error('short_name')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
         <label for="country_slug" class="block text-sm font-medium text-gray-700 mb-1">Country Slug</label>
         <input type="text" name="country_slug" id="country_slug"
             value="{{ old('country_slug', $country?->country_slug) }}"
             class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('country_slug') border-red-500 @enderror"
             placeholder="Auto-generated if empty">
         @error('country_slug')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="flag_image" class="block text-sm font-medium text-gray-700 mb-1">Flag Image</label>
+        @if ($country?->flag_image)
+            <div class="mb-2">
+                <img src="{{ $country->flag_url }}" alt="{{ $country->country_name }} Flag"
+                    class="h-10 w-auto border border-gray-200 rounded">
+            </div>
+        @endif
+        <input type="file" name="flag_image" id="flag_image"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('flag_image') border-red-500 @enderror"
+            accept="image/png,image/jpeg,image/gif,image/svg+xml,image/webp">
+        <p class="mt-1 text-xs text-gray-500">Recommended: 64x64 or 128x128 pixels. PNG, JPG, SVG, or WebP.</p>
+        @error('flag_image')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
@@ -67,5 +96,14 @@
         @error('world_region')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
         @enderror
+    </div>
+
+    <div>
+        <label for="status" class="flex items-center gap-2">
+            <input type="checkbox" name="status" id="status" value="1"
+                {{ old('status', $country?->status ?? true) ? 'checked' : '' }}
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+            <span class="text-sm font-medium text-gray-700">Active</span>
+        </label>
     </div>
 </div>

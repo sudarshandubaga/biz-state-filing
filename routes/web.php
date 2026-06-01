@@ -183,9 +183,12 @@ Route::get('/startup-cost-calculator', [WebController::class, 'startupCostCalcul
 // State Filing Deadlines
 Route::get('/state-filing-deadlines', [WebController::class, 'stateFilingDeadlines'])->name('web.state-filing-deadlines');
 
-// Dynamic Pages (must be at the end to avoid conflicting with other routes)
-Route::get('/{slug}', [WebController::class, 'pageDetail'])->name('web.page');
-
 // Resources
 Route::get('/resources', [WebController::class, 'resources'])->name('web.resources');
 Route::get('/resources/{slug}', [WebController::class, 'resourceDetail'])->name('web.resource-detail');
+
+// Country Switch Route (for the topbar dropdown - must be before dynamic page route)
+Route::get('/switch-country/{countryId}', [WebController::class, 'switchCountry'])->name('web.switch-country');
+
+// Dynamic Pages (must be at the end to avoid conflicting with other routes)
+Route::get('/{slug}', [WebController::class, 'pageDetail'])->name('web.page');

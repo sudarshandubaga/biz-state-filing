@@ -59,9 +59,35 @@
     </div>
 </div>
 
-<!-- Fees -->
+<!-- Hero Section -->
 <div class="border-b pb-4 mb-4">
-    <h4 class="text-md font-semibold text-gray-800 mb-4">Fees</h4>
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Hero Section</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="md:col-span-2">
+            <label for="hero_heading" class="block text-sm font-medium text-gray-700 mb-1">Hero Heading</label>
+            <input type="text" name="hero_heading" id="hero_heading"
+                value="{{ old('hero_heading', $state?->hero_heading) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., Start a Business in Michigan">
+            @error('hero_heading')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="md:col-span-2">
+            <label for="hero_subheading" class="block text-sm font-medium text-gray-700 mb-1">Hero Subheading</label>
+            <textarea name="hero_subheading" id="hero_subheading" rows="2"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Description text for the hero banner">{{ old('hero_subheading', $state?->hero_subheading) }}</textarea>
+            @error('hero_subheading')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<!-- Fees & Metrics -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Fees & Processing Metrics</h4>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
             <label for="filing_fee" class="block text-sm font-medium text-gray-700 mb-1">Filing Fee ($)</label>
@@ -82,6 +108,200 @@
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
+
+        <div>
+            <label for="standard_processing_days" class="block text-sm font-medium text-gray-700 mb-1">Standard
+                Processing (Days)</label>
+            <input type="text" name="standard_processing_days" id="standard_processing_days"
+                value="{{ old('standard_processing_days', $state?->standard_processing_days) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., 10 - 15 Days">
+            @error('standard_processing_days')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="standard_processing_label" class="block text-sm font-medium text-gray-700 mb-1">Standard
+                Processing Label</label>
+            <input type="text" name="standard_processing_label" id="standard_processing_label"
+                value="{{ old('standard_processing_label', $state?->standard_processing_label) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., LARA Corporations Division queue">
+            @error('standard_processing_label')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="expedited_processing_text" class="block text-sm font-medium text-gray-700 mb-1">Expedited
+                Processing Text</label>
+            <input type="text" name="expedited_processing_text" id="expedited_processing_text"
+                value="{{ old('expedited_processing_text', $state?->expedited_processing_text) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., 24-Hour / Same-Day">
+            @error('expedited_processing_text')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="expedited_processing_label" class="block text-sm font-medium text-gray-700 mb-1">Expedited
+                Processing Label</label>
+            <input type="text" name="expedited_processing_label" id="expedited_processing_label"
+                value="{{ old('expedited_processing_label', $state?->expedited_processing_label) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., Available tiers from +$50 to +$1,000">
+            @error('expedited_processing_label')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="annual_llc_fee" class="block text-sm font-medium text-gray-700 mb-1">Annual LLC Fee
+                ($)</label>
+            <input type="number" name="annual_llc_fee" id="annual_llc_fee"
+                value="{{ old('annual_llc_fee', $state?->annual_llc_fee ?? 0) }}" step="0.01" min="0"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            @error('annual_llc_fee')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="annual_llc_fee_label" class="block text-sm font-medium text-gray-700 mb-1">Annual LLC Fee
+                Label</label>
+            <input type="text" name="annual_llc_fee_label" id="annual_llc_fee_label"
+                value="{{ old('annual_llc_fee_label', $state?->annual_llc_fee_label) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., Recurring yearly Statement fee">
+            @error('annual_llc_fee_label')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">CTA Section</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="md:col-span-2">
+            <label for="cta_heading" class="block text-sm font-medium text-gray-700 mb-1">CTA Heading</label>
+            <input type="text" name="cta_heading" id="cta_heading"
+                value="{{ old('cta_heading', $state?->cta_heading) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., Ready to Register Your Michigan Entity?">
+            @error('cta_heading')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="md:col-span-2">
+            <label for="cta_subheading" class="block text-sm font-medium text-gray-700 mb-1">CTA Subheading</label>
+            <textarea name="cta_subheading" id="cta_subheading" rows="2"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Description text for the CTA card">{{ old('cta_subheading', $state?->cta_subheading) }}</textarea>
+            @error('cta_subheading')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<!-- Strategic Benefits -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Strategic Benefits (JSON)</h4>
+    <div class="mb-2">
+        <p class="text-xs text-gray-500 mb-2">Enter benefits as JSON array of objects: [{"title":"...",
+            "description":"...", "icon":"..."}]</p>
+        <textarea name="benefits_data" id="benefits_data" rows="6"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs"
+            placeholder='[{"title":"Flat Income Tax Advantage","description":"Michigan features...","icon":"chart"}]'>{{ old('benefits_data', $state?->benefits_data ? json_encode($state->benefits_data, JSON_PRETTY_PRINT) : '') }}</textarea>
+    </div>
+    @error('benefits_data')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- Industry Sectors Table -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Industry Sectors Table (JSON)</h4>
+    <div class="mb-2">
+        <p class="text-xs text-gray-500 mb-2">JSON array: [{"category":"...", "avg_cost":"...",
+            "regulatory_overhead":"...", "growth":"...", "guide_link":"...", "guide_text":"..."}]</p>
+        <textarea name="industry_sectors_data" id="industry_sectors_data" rows="6"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs"
+            placeholder='[{"category":"Health Care & Senior Support","avg_cost":"$85,000","regulatory_overhead":"High / Complex","growth":"+4.2%","guide_link":"/healthcare","guide_text":"View Healthcare Requirements"}]'>{{ old('industry_sectors_data', $state?->industry_sectors_data ? json_encode($state->industry_sectors_data, JSON_PRETTY_PRINT) : '') }}</textarea>
+    </div>
+    @error('industry_sectors_data')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- Execution Steps -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Execution Steps (JSON)</h4>
+    <div class="mb-2">
+        <p class="text-xs text-gray-500 mb-2">JSON array: [{"title":"...", "description":"...",
+            "partners":[{"name":"...", "note":"...", "url":"...", "button_text":"..."}]}]</p>
+        <textarea name="execution_steps_data" id="execution_steps_data" rows="8"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs"
+            placeholder='[{"title":"Structure and File","description":"Submit formal constitutional documents...","partners":[{"name":"Bizee","note":"Excellent for baseline LLC setups.","url":"https://...","button_text":"Form via Bizee"}]}]'>{{ old('execution_steps_data', $state?->execution_steps_data ? json_encode($state->execution_steps_data, JSON_PRETTY_PRINT) : '') }}</textarea>
+    </div>
+    @error('execution_steps_data')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- FAQs -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">FAQs (JSON)</h4>
+    <div class="mb-2">
+        <p class="text-xs text-gray-500 mb-2">JSON array: [{"question":"...", "answer":"..."}]</p>
+        <textarea name="faqs_data" id="faqs_data" rows="6"
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono text-xs"
+            placeholder='[{"question":"Does this state have a publication requirement?","answer":"No. Michigan does not..."}]'>{{ old('faqs_data', $state?->faqs_data ? json_encode($state->faqs_data, JSON_PRETTY_PRINT) : '') }}</textarea>
+    </div>
+    @error('faqs_data')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- Ecosystem Panel -->
+<div class="border-b pb-4 mb-4">
+    <h4 class="text-md font-semibold text-gray-800 mb-4">Ecosystem / Buy a Business Panel</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="md:col-span-2">
+            <label for="ecosystem_heading" class="block text-sm font-medium text-gray-700 mb-1">Ecosystem
+                Heading</label>
+            <input type="text" name="ecosystem_heading" id="ecosystem_heading"
+                value="{{ old('ecosystem_heading', $state?->ecosystem_heading) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., Ecosystem Alternative: Buy an Active Michigan Asset">
+        </div>
+        <div class="md:col-span-2">
+            <label for="ecosystem_content" class="block text-sm font-medium text-gray-700 mb-1">Ecosystem
+                Content</label>
+            <textarea name="ecosystem_content" id="ecosystem_content" rows="2"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Descriptive text for the ecosystem panel">{{ old('ecosystem_content', $state?->ecosystem_content) }}</textarea>
+        </div>
+        <div>
+            <label for="ecosystem_link_text" class="block text-sm font-medium text-gray-700 mb-1">Ecosystem Link
+                Text</label>
+            <input type="text" name="ecosystem_link_text" id="ecosystem_link_text"
+                value="{{ old('ecosystem_link_text', $state?->ecosystem_link_text) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="e.g., AziBiz.com">
+        </div>
+        <div>
+            <label for="ecosystem_link_url" class="block text-sm font-medium text-gray-700 mb-1">Ecosystem Link
+                URL</label>
+            <input type="url" name="ecosystem_link_url" id="ecosystem_link_url"
+                value="{{ old('ecosystem_link_url', $state?->ecosystem_link_url) }}"
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="https://azibiz.com">
+        </div>
     </div>
 </div>
 
@@ -94,7 +314,8 @@
                     class="text-red-500">*</span></label>
             <select name="deadline_type" id="deadline_type" required
                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('deadline_type') border-red-500 @enderror">
-                <option value="fixed" {{ old('deadline_type', $state?->deadline_type) == 'fixed' ? 'selected' : '' }}>
+                <option value="fixed"
+                    {{ old('deadline_type', $state?->deadline_type) == 'fixed' ? 'selected' : '' }}>
                     Fixed</option>
                 <option value="anniversary"
                     {{ old('deadline_type', $state?->deadline_type) == 'anniversary' ? 'selected' : '' }}>Anniversary

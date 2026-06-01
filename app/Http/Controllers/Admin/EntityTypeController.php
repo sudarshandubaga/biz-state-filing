@@ -66,6 +66,25 @@ class EntityTypeController extends Controller
             'seo_description' => 'nullable|string',
             'canonical_url' => 'nullable|url|max:255',
             'status' => 'boolean',
+            // New rich fields
+            'label' => 'nullable|string|max:120',
+            'headline' => 'nullable|string|max:255',
+            'sub_headline' => 'nullable|string',
+            'intro_content' => 'nullable|string',
+            'not_recommended_for' => 'nullable|string|max:255',
+            'tax_deep_dive' => 'nullable|string',
+            'tax_treatment_summary' => 'nullable|string',
+            'liability_protection' => 'nullable|string|max:255',
+            'taxation_type' => 'nullable|string|max:255',
+            'ownership_structure' => 'nullable|string|max:255',
+            'best_for_tagline' => 'nullable|string|max:255',
+            'formation_cost_range' => 'nullable|string|max:100',
+            'compliance_level' => 'nullable|string|max:100',
+            'complexity_level' => 'nullable|string|max:100',
+            'features_data' => 'nullable|json',
+            'steps_data' => 'nullable|json',
+            'faqs_data' => 'nullable|json',
+            'comparison_data' => 'nullable|json',
         ]);
 
         if (empty($validated['slug'])) {
@@ -110,6 +129,25 @@ class EntityTypeController extends Controller
             'seo_description' => 'nullable|string',
             'canonical_url' => 'nullable|url|max:255',
             'status' => 'boolean',
+            // New rich fields
+            'label' => 'nullable|string|max:120',
+            'headline' => 'nullable|string|max:255',
+            'sub_headline' => 'nullable|string',
+            'intro_content' => 'nullable|string',
+            'not_recommended_for' => 'nullable|string|max:255',
+            'tax_deep_dive' => 'nullable|string',
+            'tax_treatment_summary' => 'nullable|string',
+            'liability_protection' => 'nullable|string|max:255',
+            'taxation_type' => 'nullable|string|max:255',
+            'ownership_structure' => 'nullable|string|max:255',
+            'best_for_tagline' => 'nullable|string|max:255',
+            'formation_cost_range' => 'nullable|string|max:100',
+            'compliance_level' => 'nullable|string|max:100',
+            'complexity_level' => 'nullable|string|max:100',
+            'features_data' => 'nullable|json',
+            'steps_data' => 'nullable|json',
+            'faqs_data' => 'nullable|json',
+            'comparison_data' => 'nullable|json',
         ]);
 
         if (empty($validated['slug'])) {

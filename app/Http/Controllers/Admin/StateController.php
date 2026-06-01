@@ -85,6 +85,25 @@ class StateController extends Controller
             'seo_title' => 'nullable|string|max:255',
             'seo_description' => 'nullable|string',
             'status' => 'boolean',
+            // New rich fields
+            'hero_heading' => 'nullable|string|max:255',
+            'hero_subheading' => 'nullable|string',
+            'standard_processing_days' => 'nullable|string|max:50',
+            'standard_processing_label' => 'nullable|string|max:255',
+            'expedited_processing_text' => 'nullable|string|max:100',
+            'expedited_processing_label' => 'nullable|string|max:255',
+            'annual_llc_fee' => 'nullable|numeric|min:0',
+            'annual_llc_fee_label' => 'nullable|string|max:255',
+            'cta_heading' => 'nullable|string|max:255',
+            'cta_subheading' => 'nullable|string',
+            'benefits_data' => 'nullable|json',
+            'industry_sectors_data' => 'nullable|json',
+            'execution_steps_data' => 'nullable|json',
+            'faqs_data' => 'nullable|json',
+            'ecosystem_heading' => 'nullable|string|max:255',
+            'ecosystem_content' => 'nullable|string',
+            'ecosystem_link_url' => 'nullable|url|max:255',
+            'ecosystem_link_text' => 'nullable|string|max:255',
         ]);
 
         if (empty($validated['state_slug'])) {
@@ -138,6 +157,25 @@ class StateController extends Controller
             'seo_title' => 'nullable|string|max:255',
             'seo_description' => 'nullable|string',
             'status' => 'boolean',
+            // New rich fields
+            'hero_heading' => 'nullable|string|max:255',
+            'hero_subheading' => 'nullable|string',
+            'standard_processing_days' => 'nullable|string|max:50',
+            'standard_processing_label' => 'nullable|string|max:255',
+            'expedited_processing_text' => 'nullable|string|max:100',
+            'expedited_processing_label' => 'nullable|string|max:255',
+            'annual_llc_fee' => 'nullable|numeric|min:0',
+            'annual_llc_fee_label' => 'nullable|string|max:255',
+            'cta_heading' => 'nullable|string|max:255',
+            'cta_subheading' => 'nullable|string',
+            'benefits_data' => 'nullable|json',
+            'industry_sectors_data' => 'nullable|json',
+            'execution_steps_data' => 'nullable|json',
+            'faqs_data' => 'nullable|json',
+            'ecosystem_heading' => 'nullable|string|max:255',
+            'ecosystem_content' => 'nullable|string',
+            'ecosystem_link_url' => 'nullable|url|max:255',
+            'ecosystem_link_text' => 'nullable|string|max:255',
         ]);
 
         if (empty($validated['state_slug'])) {

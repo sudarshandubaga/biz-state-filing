@@ -94,6 +94,8 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Country</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Short</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     ISO Code</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Currency</th>
@@ -117,8 +119,21 @@
                                             class="row-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer">
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">{{ $country->country_name }}</div>
-                                        <div class="text-sm text-gray-500">{{ $country->country_slug }}</div>
+                                        <div class="flex items-center gap-3">
+                                            @if ($country->flag_image)
+                                                <img src="{{ $country->flag_url }}" alt="{{ $country->short_name }}"
+                                                    class="w-6 h-6 object-cover rounded shadow-sm">
+                                            @endif
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">{{ $country->country_name }}
+                                                </div>
+                                                <div class="text-sm text-gray-500">{{ $country->country_slug }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="text-sm font-semibold text-gray-900">{{ $country->short_name ?? 'N/A' }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="text-sm text-gray-900">{{ $country->iso_code ?? 'N/A' }}</span>
@@ -157,7 +172,8 @@
                                         </a>
                                         <button type="button"
                                             onclick="deleteItem({{ $country->id }}, '{{ route('admin.countries.destroy', $country) }}')"
-                                            class="text-red-600 hover:text-red-900 inline-flex items-center" title="Delete">
+                                            class="text-red-600 hover:text-red-900 inline-flex items-center"
+                                            title="Delete">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -168,7 +184,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="px-6 py-4 text-center text-gray-500">No countries found.
+                                    <td colspan="10" class="px-6 py-4 text-center text-gray-500">No countries found.
                                     </td>
                                 </tr>
                             @endforelse

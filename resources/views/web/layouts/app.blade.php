@@ -20,13 +20,67 @@
 
 <body>
     <!-- ============================================
-    TOPBAR: Auth, Contact, Start My LLC
+    TOPBAR: Auth, Country, Contact, Start My LLC
     ============================================ -->
     <div class="topbar">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-9">
-                <!-- Left: Contact info -->
-                <div class="flex items-center gap-5">
+                <!-- Left: Country Dropdown + Contact -->
+                <div class="flex items-center gap-3">
+                    <div class="relative country-dropdown">
+                        @php
+                            $selectedCountry = $selectedCountry ?? null;
+                            $topCountries = isset($navCountries)
+                                ? $navCountries
+                                : \App\Models\Country::where('status', true)->orderBy('country_name')->get() ??
+                                    collect([]);
+                        @endphp
+                        <button type="button"
+                            class="country-dropdown-toggle flex items-center gap-1.5 text-gray-300 hover:text-white text-xs transition-colors font-medium">
+                            @if ($selectedCountry && $selectedCountry->flag_image)
+                                <img src="{{ $selectedCountry->flag_url }}" alt="{{ $selectedCountry->short_name }}"
+                                    class="w-5 h-4 object-cover rounded shadow-sm border border-white/20">
+                            @else
+                                <i class="fa-solid fa-globe"></i>
+                            @endif
+                            <span
+                                class="max-w-[100px] truncate">{{ $selectedCountry ? $selectedCountry->country_name : 'Country' }}</span>
+                            <svg class="w-3 h-3 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <ul
+                            class="country-dropdown-menu absolute left-0 top-full mt-1.5 bg-white border border-gray-200 rounded-lg shadow-xl py-1 min-w-[220px] z-[9999] hidden">
+                            <li
+                                class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100">
+                                Select Your Country</li>
+                            @foreach ($topCountries as $tc)
+                                <li>
+                                    <a href="{{ route('web.switch-country', $tc->id) }}"
+                                        class="country-select-link flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors {{ $selectedCountry && $selectedCountry->id === $tc->id ? 'bg-blue-50 text-blue-700 font-semibold' : '' }}">
+                                        @if ($tc->flag_image)
+                                            <img src="{{ $tc->flag_url }}" alt="{{ $tc->short_name }}"
+                                                class="w-6 h-4 object-cover rounded shadow-sm border border-gray-100">
+                                        @else
+                                            <span
+                                                class="w-6 h-4 inline-flex items-center justify-center text-[8px] font-bold bg-gray-100 text-gray-500 rounded border border-gray-200">{{ $tc->short_name ?? substr($tc->country_name, 0, 2) }}</span>
+                                        @endif
+                                        <span class="flex-1">{{ $tc->country_name }}</span>
+                                        @if ($selectedCountry && $selectedCountry->id === $tc->id)
+                                            <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                     <a href="{{ route('web.contact') }}"
                         class="text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
                         <i class="fa-solid fa-envelope text-[10px]"></i>
@@ -100,12 +154,12 @@
                             <div class="mega-menu-grid">
                                 <!-- Column 1: Startup Guides -->
                                 <div class="mega-menu-column">
-                                    <span class="mega-menu-heading">Startup Guides</span>
+                                    {{-- <span class="mega-menu-heading">Startup Guides</span>
                                     <a href="{{ route('web.start-business') }}"
                                         class="mega-menu-item mega-menu-item-bold">
                                         <i class="fa-solid fa-compass text-blue-500 mr-2"></i>Complete Startup Guide
-                                    </a>
-                                    <span class="mega-menu-subheading">Start a Business by State</span>
+                                    </a> --}}
+                                    <span class="mega-menu-heading">Start a Business by State</span>
                                     @foreach (($navStates ?? [])->take(5) as $navState)
                                         <a href="{{ route('web.state-detail', $navState->state_slug) }}"
                                             class="mega-menu-item">Start in {{ $navState->state_name }}</a>
@@ -770,6 +824,32 @@
     @include('web.partials.upgrade-modal')
     @vite('resources/js/app.js')
     @stack('scripts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Country dropdown toggle
+            const dropdown = document.querySelector('.country-dropdown');
+            const toggle = dropdown?.querySelector('.country-dropdown-toggle');
+            const menu = dropdown?.querySelector('.country-dropdown-menu');
+
+            if (toggle && menu) {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('hidden');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Country selection - links work normally (page reloads to show selected country)
+            // Already handled by default link behavior
+        });
+    </script>
 </body>
 
 </html>

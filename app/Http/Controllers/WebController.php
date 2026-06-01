@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CountryHelper;
 use App\Models\ComplianceDeadline;
+use App\Models\Country;
 use App\Models\State;
 use App\Models\EntityType;
 use App\Models\Industry;
@@ -33,20 +35,24 @@ class WebController extends Controller
     {
         $state = State::where('state_slug', $slug)->firstOrFail();
         $entityTypes = EntityType::where('status', true)->get();
-        return view('web.screens.state', compact('state', 'entityTypes'));
+        $allStates = State::where('status', true)->orderBy('state_name')->get();
+        $countries = Country::where('status', true)->orderBy('country_name')->get();
+        return view('web.screens.state', compact('state', 'entityTypes', 'allStates', 'countries'));
     }
 
     public function entityTypes()
     {
-        $entityTypes = EntityType::where('status', true)->get();
-        return view('web.screens.entity-types', compact('entityTypes'));
+        $entityTypes = EntityType::where('status', true)->orderBy('name')->paginate(12);
+        $allEntityTypes = EntityType::where('status', true)->orderBy('name')->get();
+        return view('web.screens.entity-types', compact('entityTypes', 'allEntityTypes'));
     }
 
     public function entityTypeDetail($slug)
     {
         $entityType = EntityType::where('slug', $slug)->firstOrFail();
         $states = State::where('status', true)->orderBy('state_name')->get();
-        return view('web.screens.entity-type', compact('entityType', 'states'));
+        $entityTypes = EntityType::where('status', true)->orderBy('name')->get();
+        return view('web.screens.entity-type', compact('entityType', 'states', 'entityTypes'));
     }
 
     public function industries()
@@ -240,6 +246,17 @@ class WebController extends Controller
     public function contact()
     {
         return view('web.screens.contact');
+    }
+
+    /**
+     * Switch the selected country (via topbar dropdown)
+     */
+    public function switchCountry($countryId)
+    {
+        $country = Country::findOrFail($countryId);
+        CountryHelper::setSelectedCountry($country->id);
+
+        return redirect()->back()->with('success', 'Country switched to ' . $country->country_name);
     }
 
     public function sendContact(Request $request)

@@ -13,6 +13,10 @@ class EntityType extends Model
         'status' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'features_data' => 'array',
+        'steps_data' => 'array',
+        'faqs_data' => 'array',
+        'comparison_data' => 'array',
     ];
 
     protected static function boot()
