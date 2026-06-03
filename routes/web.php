@@ -148,6 +148,9 @@ Route::get('/entity-types/{slug}', [WebController::class, 'entityTypeDetail'])->
 Route::get('/industries', [WebController::class, 'industries'])->name('web.industries');
 Route::get('/industries/{slug}', [WebController::class, 'industryDetail'])->name('web.industry-detail');
 
+// Industry single page (alias for /industries/{slug})
+Route::get('/industry/{slug}', [WebController::class, 'industryDetail'])->name('web.industry');
+
 // Forms Library
 Route::get('/forms-library', [WebController::class, 'taxForms'])->name('web.forms-library');
 Route::get('/tax-forms', [WebController::class, 'onlyTaxForms'])->name('web.tax-forms');

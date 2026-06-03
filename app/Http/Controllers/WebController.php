@@ -65,8 +65,24 @@ class WebController extends Controller
 
     public function industryDetail($slug)
     {
-        $industry = Industry::where('slug', $slug)->firstOrFail();
-        return view('web.screens.industry', compact('industry'));
+        // Flexible matching - try exact slug first, then prefix match
+        // e.g. "restaurant" matches "restaurant-business"
+        $industry = Industry::where('status', true)
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('slug', 'like', $slug . '%')
+                    ->orWhere('slug', 'like', '%' . $slug);
+            })
+            ->first();
+
+        if (!$industry) {
+            abort(404);
+        }
+
+        $states = State::where('status', true)->orderBy('state_name')->get();
+        $entityTypes = EntityType::where('status', true)->get();
+
+        return view('web.screens.industry', compact('industry', 'states', 'entityTypes'));
     }
 
     public function taxForms(Request $request, $state = null, $entityType = null)
